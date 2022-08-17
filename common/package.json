@@ -1,7 +1,7 @@
 {
   "name": "ad4m-connect-common",
   "version": "0.0.1",
-  "description": "A web component to connect with AD4MIN",
+  "description": "A web component to connect with AD4M",
   "type": "module",
   "scripts": {
     "build": "tsc",
