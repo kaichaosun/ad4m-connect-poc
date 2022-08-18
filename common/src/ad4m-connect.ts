@@ -34,7 +34,7 @@ export class Ad4mConnect extends LitElement {
    * The app's information will be shown to users when requesting access to ad4m.
    */
   @property({type: Object})
-  appInfo = {
+  app = {
     name: 'demo',
     description: 'demo',
     url: 'https://ad4m.dev',
@@ -63,8 +63,10 @@ export class Ad4mConnect extends LitElement {
     `;
   }
 
-  constructor() {
-    super();
+  override connectedCallback() {
+    super.connectedCallback();
+    console.log("app info: ", this.app);
+    console.log("exec endpoint: ", this.endpoint);
     this.requestCapability();
   }
 
@@ -100,9 +102,9 @@ export class Ad4mConnect extends LitElement {
       let ad4mClientWithoutJwt = this.buildClient(this.endpoint, '');
       console.log('start to request capability');
       const requestId = await ad4mClientWithoutJwt.agent.requestCapability(
-        this.appInfo.name,
-        this.appInfo.description,
-        this.appInfo.url,
+        this.app.name,
+        this.app.description,
+        this.app.url,
         JSON.stringify(this.capabilities)
       );
       this.requestId = requestId;
