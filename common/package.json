@@ -15,7 +15,10 @@
     "serve:prod": "MODE=prod npm run serve"
   },
   "dependencies": {
-    "lit": "^2.3.0"
+    "lit": "^2.3.0",
+    "@apollo/client": "^3.6.9",
+    "@perspect3vism/ad4m": "0.1.34",
+    "graphql-ws": "^5.9.1"
   },
   "devDependencies": {
     "@web/dev-server": "^0.1.34",

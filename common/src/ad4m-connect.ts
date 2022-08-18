@@ -1,6 +1,10 @@
 import {LitElement, html, css} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
+import {customElement, property, state} from 'lit/decorators.js';
 import {AppInfo, Capabilities} from './capability';
+import {GraphQLWsLink} from '@apollo/client/link/subscriptions';
+import {createClient} from 'graphql-ws';
+import {ApolloClient, InMemoryCache} from '@apollo/client/core';
+import {Ad4mClient} from '@perspect3vism/ad4m';
 
 /**
  * An element to connect with ad4m.
@@ -19,18 +23,6 @@ export class Ad4mConnect extends LitElement {
       max-width: 800px;
     }
   `;
-
-  /**
-   * The name to say "Hello" to.
-   */
-  @property()
-  name = 'World';
-
-  /**
-   * The number of times the button has been clicked.
-   */
-  @property({type: Number})
-  count = 0;
 
   /**
    * The ad4m GraphQL endpoint.
@@ -54,29 +46,97 @@ export class Ad4mConnect extends LitElement {
   @property({type: Array})
   capabilities = [] as Capabilities;
 
+  @state()
+  private requestId = '';
+
+  @state()
+  private secretCode = '';
+
   override render() {
     return html`
-      <h1>${this.sayHello(this.name)}!</h1>
-      <button @click=${this._onClick} part="button">
-        Click Count: ${this.count}
-      </button>
+      <h1>AD4M Connect</h1>
+      <span>Security Code:</span>
+      <input @change=${(e) => (this.secretCode = e.target.value)} />
+      <button @click=${this.generateJwt} part="button">Confirm</button>
 
       <slot></slot>
     `;
   }
 
-  private _onClick() {
-    this.count++;
-    this.dispatchEvent(new CustomEvent('count-changed'));
+  constructor() {
+    super();
+    this.requestCapability();
   }
 
-  /**
-   * Formats a greeting
-   * @param name The name to say "Hello" to
-   */
-  sayHello(name: string): string {
-    return `Hello, ${name}`;
+  buildClient(uri: string, authorization?: string) {
+    const wsLink = new GraphQLWsLink(
+      createClient({
+        url: uri,
+        connectionParams: () => {
+          return {
+            headers: {authorization},
+          };
+        },
+      })
+    );
+    let apolloClient = new ApolloClient({
+      link: wsLink,
+      cache: new InMemoryCache({resultCaching: false, addTypename: false}),
+      defaultOptions: {
+        watchQuery: {
+          fetchPolicy: 'no-cache',
+        },
+        query: {
+          fetchPolicy: 'no-cache',
+        },
+      },
+    });
+
+    return new Ad4mClient(apolloClient);
   }
+
+  async requestCapability() {
+    try {
+      let ad4mClientWithoutJwt = this.buildClient(this.endpoint, '');
+      console.log('start to request capability');
+      const requestId = await ad4mClientWithoutJwt.agent.requestCapability(
+        this.appInfo.name,
+        this.appInfo.description,
+        this.appInfo.url,
+        JSON.stringify(this.capabilities)
+      );
+      this.requestId = requestId;
+      console.log('auth request id: ', requestId);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async generateJwt() {
+    try {
+      let ad4mClientWithoutJwt = this.buildClient(this.endpoint, '');
+      console.log('start to generate JWT');
+      let jwt = await ad4mClientWithoutJwt.agent.generateJwt(
+        this.requestId,
+        this.secretCode
+      );
+      console.log('auth jwt: ', jwt);
+      const event = new CustomEvent<JwtReceivedEvent>('jwtReceivedEvent', {
+        detail: {
+          jwt,
+          client: this.buildClient(this.endpoint, jwt),
+        },
+      });
+      this.dispatchEvent(event);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
+export interface JwtReceivedEvent {
+  jwt: string;
+  client: Ad4mClient;
 }
 
 declare global {
