@@ -1,9 +1,3 @@
-export interface AppInfo {
-  name: string;
-  description: string;
-  url: string;
-}
-
 export type Capabilities = Capability[];
 
 export interface Capability {

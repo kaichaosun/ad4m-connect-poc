@@ -1,6 +1,6 @@
 import {LitElement, html, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {AppInfo, Capabilities} from './capability';
+import {Capabilities} from './capability';
 import {GraphQLWsLink} from '@apollo/client/link/subscriptions';
 import {createClient} from 'graphql-ws';
 import {ApolloClient, InMemoryCache} from '@apollo/client/core';
@@ -65,8 +65,8 @@ export class Ad4mConnect extends LitElement {
 
   override connectedCallback() {
     super.connectedCallback();
-    console.log("app info: ", this.app);
-    console.log("exec endpoint: ", this.endpoint);
+    console.log('app info: ', this.app);
+    console.log('exec endpoint: ', this.endpoint);
     this.requestCapability();
   }
 
@@ -134,6 +134,12 @@ export class Ad4mConnect extends LitElement {
       console.log(err);
     }
   }
+}
+
+export interface AppInfo {
+  name: string;
+  description: string;
+  url: string;
 }
 
 export interface JwtReceivedEvent {
