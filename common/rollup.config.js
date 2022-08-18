@@ -2,11 +2,12 @@ import summary from 'rollup-plugin-summary';
 import {terser} from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
+import commonjs from '@rollup/plugin-commonjs';
 
 export default {
-  input: 'my-element.js',
+  input: 'dist/ad4m-connect.js',
   output: {
-    file: 'my-element.bundled.js',
+    file: 'dist/ad4m-connect.bundled.js',
     format: 'esm',
   },
   onwarn(warning) {
@@ -28,5 +29,6 @@ export default {
       },
     }),
     summary(),
+    commonjs(),
   ],
 };

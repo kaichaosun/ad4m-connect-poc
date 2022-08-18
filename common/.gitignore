@@ -1,6 +1,6 @@
 custom-elements.json
 
-build
+dist
 
 # only generated for size check
 *.bundled.js

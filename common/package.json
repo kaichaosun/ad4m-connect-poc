@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
+    "build-rollup": "rollup -c",
     "build:watch": "tsc --watch",
     "clean": "rimraf my-element.{d.ts,d.ts.map,js,js.map} test/my-element.{d.ts,d.ts.map,js,js.map} test/my-element_test.{d.ts,d.ts.map,js,js.map}",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
@@ -22,7 +23,13 @@
   },
   "devDependencies": {
     "@web/dev-server": "^0.1.34",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-replace": "^4.0.0",
+    "@rollup/plugin-commonjs": "^20.0.0",
+    "rollup": "^2.73.0",
+    "rollup-plugin-summary": "^1.4.3",
+    "rollup-plugin-terser": "^7.0.2"
   },
   "author": "Kaichao Sun",
   "license": "CAL-1.0"
