@@ -1,10 +1,6 @@
 custom-elements.json
 
-# top level source
-my-element.js
-my-element.js.map
-my-element.d.ts
-my-element.d.ts.map
+build
 
 # only generated for size check
-my-element.bundled.js
+*.bundled.js

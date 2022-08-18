@@ -7,7 +7,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "inlineSources": true,
-    "outDir": "./",
+    "outDir": "./build",
     "rootDir": "./src",
     "strict": true,
     "noUnusedLocals": true,
@@ -21,6 +21,7 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
+    "skipLibCheck": true,
     "plugins": [
       {
         "name": "ts-lit-plugin",
