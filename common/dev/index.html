@@ -8,8 +8,8 @@
     <script src="../node_modules/lit/polyfill-support.js"></script>
     <script type="module" src="../dist/ad4m-connect.bundled.js"></script>
     <script>
-      window.addEventListener('jwtReceivedEvent', (e) => {
-        console.log("jwtReceivedEvent received");
+      window.addEventListener('jwt-received', (e) => {
+        console.log("jwt received");
         console.log(e.detail.jwt);
       });
     </script>

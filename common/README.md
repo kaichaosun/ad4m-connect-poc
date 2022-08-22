@@ -27,12 +27,12 @@ Then use the custom element,
 </body>
 ```
 
-Listen to the custom `jwtReceivedEvent` event for generated JWT,
+Listen to the custom `jwt-received` event for generated JWT,
 
 ```html
 <script>
-  window.addEventListener('jwtReceivedEvent', (e) => {
-    console.log("jwtReceivedEvent received");
+  window.addEventListener('jwt-received', (e) => {
+    console.log("jwt received");
     console.log(e.detail.jwt);
   });
 </script>

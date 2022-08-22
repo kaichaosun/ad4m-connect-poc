@@ -116,7 +116,7 @@ export class Ad4mConnect extends LitElement {
         this.secretCode
       );
       console.log('auth jwt: ', jwt);
-      const event = new CustomEvent<JwtReceivedEvent>('jwtReceivedEvent', {
+      const event = new CustomEvent<JwtReceivedEvent>('jwt-received', {
         detail: {
           jwt,
         },
