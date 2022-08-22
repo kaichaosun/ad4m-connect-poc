@@ -7,10 +7,6 @@ import {Ad4mClient} from '@perspect3vism/ad4m';
 
 /**
  * An element to connect with ad4m.
- *
- * @fires count-changed - Indicates when the count changes
- * @slot - This element has a slot for your own markup
- * @csspart button - The button
  */
 @customElement('ad4m-connect')
 export class Ad4mConnect extends LitElement {
@@ -57,8 +53,6 @@ export class Ad4mConnect extends LitElement {
       <span>Security Code:</span>
       <input @change=${(e) => (this.secretCode = e.target.value)} />
       <button @click=${this.generateJwt} part="button">Confirm</button>
-
-      <slot></slot>
     `;
   }
 
