@@ -1,6 +1,5 @@
 import {LitElement, html, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {Capabilities} from './capability';
 import {GraphQLWsLink} from '@apollo/client/link/subscriptions';
 import {createClient} from 'graphql-ws';
 import {ApolloClient, InMemoryCache} from '@apollo/client/core';
@@ -136,12 +135,6 @@ export class Ad4mConnect extends LitElement {
   }
 }
 
-export interface AppInfo {
-  name: string;
-  description: string;
-  url: string;
-}
-
 export interface JwtReceivedEvent {
   jwt: string;
   client: Ad4mClient;
@@ -152,3 +145,32 @@ declare global {
     'ad4m-connect': Ad4mConnect;
   }
 }
+
+export interface AppInfo {
+  name: string;
+  description: string;
+  url: string;
+}
+
+export type Capabilities = Capability[];
+
+export interface Capability {
+  with: Resource;
+  can: string[];
+}
+
+export interface Resource {
+  domain: string;
+  pointers: string[];
+}
+
+export const WILD_CARD = '*';
+
+// admin capabilities
+export const ALL_CAPABILITY: Capability = {
+  with: {
+    domain: WILD_CARD,
+    pointers: [WILD_CARD],
+  },
+  can: [WILD_CARD],
+};
