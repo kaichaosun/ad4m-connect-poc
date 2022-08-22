@@ -7,6 +7,12 @@
     <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
     <script src="../node_modules/lit/polyfill-support.js"></script>
     <script type="module" src="../dist/ad4m-connect.bundled.js"></script>
+    <script>
+      window.addEventListener('jwtReceivedEvent', (e) => {
+        console.log("jwtReceivedEvent received");
+        console.log(e.detail.jwt);
+      });
+    </script>
     <style>
       p {
         border: solid 1px blue;

@@ -119,8 +119,9 @@ export class Ad4mConnect extends LitElement {
       const event = new CustomEvent<JwtReceivedEvent>('jwtReceivedEvent', {
         detail: {
           jwt,
-          client: this.buildClient(this.endpoint, jwt),
         },
+        bubbles: true,
+        composed: true,
       });
       this.dispatchEvent(event);
     } catch (err) {
@@ -131,7 +132,6 @@ export class Ad4mConnect extends LitElement {
 
 export interface JwtReceivedEvent {
   jwt: string;
-  client: Ad4mClient;
 }
 
 declare global {

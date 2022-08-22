@@ -27,6 +27,17 @@ Then use the custom element,
 </body>
 ```
 
+Listen to the custom `jwtReceivedEvent` event for generated JWT,
+
+```html
+<script>
+  window.addEventListener('jwtReceivedEvent', (e) => {
+    console.log("jwtReceivedEvent received");
+    console.log(e.detail.jwt);
+  });
+</script>
+```
+
 [Example](https://github.com/kaichaosun/ad4m-connect-poc/blob/main/common/dev/index.html)
 
 ### Vue
@@ -63,7 +74,7 @@ export default defineConfig({
 import "ad4m-connect-common";
 ```
 
-Use the custom tag `ad4m-connect` wherever you want,
+3. Use the custom tag `ad4m-connect` wherever you want,
 
 ```typescript
 <ad4m-connect
