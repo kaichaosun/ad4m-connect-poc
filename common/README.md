@@ -81,6 +81,14 @@ import "ad4m-connect-common";
   .app='{"name":"testapp","description":"test app","url":"my-url"}'
   endpoint="ws://localhost:12000/graphql"
   .capabilities='[{"with":{"domain":"*","pointers":["*"]},"can":["*"]}]'
+  @jwt-received="log"
 />
+```
+
+```typescript
+function log(event: CustomEvent<JwtReceivedEvent>) {
+  console.log("jwt received...");
+  console.log(event.detail.jwt);
+}
 ```
 
